@@ -183,6 +183,8 @@ class Game:
             self._set_level_conditions()
             cnt = self.LEVELS[self.game_level]['monsters']
             speed = self.LEVELS[self.game_level]['speed']
+            self.wait_start_game = True
+            self.game_running = False
             pygame_gui.windows.UIConfirmationDialog(
                 rect=pygame.Rect((self.DIALOG_X, self.DIALOG_Y), (400, 250)),
                 manager=self.ui_manager,
@@ -197,6 +199,10 @@ class Game:
         self._show_bg()
 
         if not self.game_running:
+            # Если ждем нажатия кнопки для начала игры
+            # то показывать кнопки не надо
+            if self.wait_start_game:
+                return
             self.controls.show()
             return
 
