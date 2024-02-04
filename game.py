@@ -61,6 +61,7 @@ class Game:
         self.lives = 0
         self.monsters_max = 0
         self.monsters_created = 0
+        self.count_amo = 0   # кол-во пуль за матч
 
         self.player = player.Player(self.MIN_Y, self.MAX_Y)
         self.bullets = pygame.sprite.Group()
@@ -99,9 +100,9 @@ class Game:
         text_y = 50
         self.screen.blit(text, (text_x, text_y))
 
-    def _show_score(self):
+    def _show_stats(self):
         """
-        Выводит счет игрока во время игры.
+        Выводит статистику игры.
         """
         # font = pygame.font.Font(None, 20)
         font = pygame.font.Font('./data/PorspicanSerif-Regular.otf', 14)
@@ -109,7 +110,8 @@ class Game:
                f"Очки: {self.score}\n" \
                f"Жизней: {self.lives}\n" \
                f"Монстров: живых={len(self.monsters)}, создано={self.monsters_created}, всего={self.monsters_max}\n" \
-               f"Уровень: {self.game_level}"
+               f"Уровень: {self.game_level}\n" \
+               f"Выпущено пуль: {self.count_amo}"
         text = font.render(info, True, pygame.Color('gray'))
         text_x = 20
         text_y = 20
@@ -220,7 +222,7 @@ class Game:
         self._check_player_hit()
         self._check_level_end()
 
-        self._show_score()
+        self._show_stats()
 
     def run(self):
         """
@@ -276,11 +278,7 @@ class Game:
 
                 if event.type == pygame.KEYDOWN:
                     if event.key == pygame.K_SPACE:
-                        self.player.shoot()
-                        pos = self.player.get_shoot_rect()
-                        b = bullet.Bullet(self.bullets)
-                        b.rect.x = pos.x
-                        b.rect.y = pos.y
+                        self._new_shoot()
 
                     if event.key == pygame.K_ESCAPE:
                         self.wait_confirm_exit = True
@@ -337,3 +335,14 @@ class Game:
                     )
 
             self.ui_manager.process_events(event)
+
+    def _new_shoot(self):
+        """
+        Создание нового выстрела
+        """
+        self.player.shoot()
+        pos = self.player.get_shoot_rect()
+        b = bullet.Bullet(self.bullets)
+        b.rect.x = pos.x
+        b.rect.y = pos.y
+        self.count_amo += 1
