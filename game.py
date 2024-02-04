@@ -174,11 +174,13 @@ class Game:
                     manager=self.ui_manager,
                     window_title=f"Вы прошли игру!",
                     action_long_desc=f"Вы прошли игру! Респект!\n"
-                                     f"Кол-во очков: {self.score}.",
+                                     f"Кол-во очков: {self.score}.\n"
+                                     f"Кол-во выпущенных пуль: {self.count_amo}",
                     blocking=True
                 )
                 # возвращаемся на первый уровень
                 self.game_level = 1
+                self.count_amo = 0
                 self._set_level_conditions()
                 return
 
@@ -301,6 +303,7 @@ class Game:
                     self.game_running = False
                     self.wait_confirm_exit = False
                     self.monsters.empty()
+                    self.count_amo = 0
                     self._set_level_conditions()
 
                 if self.wait_start_game:
