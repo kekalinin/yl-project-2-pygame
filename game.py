@@ -1,9 +1,13 @@
+import datetime
 import random
 import sys
+import time
+
 import pygame
 import pygame_gui
 
 import bullet
+import db
 import monster
 import player
 import settings
@@ -88,6 +92,8 @@ class Game:
         # Ожидаем ли подтверждение начала игры
         self.wait_start_game = False
 
+        db.init_db()
+
     def _show_bg(self):
         """
         Показывает фон
@@ -151,9 +157,8 @@ class Game:
                     action_long_desc=f"Игра окончена.\nЗаработано очков: {self.score}",
                     blocking=True
                 )
-
-                # возвращаемся на первый уровень
-                self.game_level = 1
+                self._save_stats()
+                self._reset_stats()
                 self._set_level_conditions()
 
     def _check_level_end(self):
@@ -178,9 +183,8 @@ class Game:
                                      f"Кол-во выпущенных пуль: {self.count_amo}",
                     blocking=True
                 )
-                # возвращаемся на первый уровень
-                self.game_level = 1
-                self.count_amo = 0
+                self._save_stats()
+                self._reset_stats()
                 self._set_level_conditions()
                 return
 
@@ -250,7 +254,6 @@ class Game:
         """
         self.lives = self.LEVELS[self.game_level]['lives']
         self.monsters_max = self.LEVELS[self.game_level]['monsters']
-        self.monsters_created = 0
 
     def _create_monster(self):
         """
@@ -303,7 +306,7 @@ class Game:
                     self.game_running = False
                     self.wait_confirm_exit = False
                     self.monsters.empty()
-                    self.count_amo = 0
+                    self._reset_stats()
                     self._set_level_conditions()
 
                 if self.wait_start_game:
@@ -320,6 +323,8 @@ class Game:
                     continue
                 if event.ui_element == self.controls.button_exit:
                     sys.exit()
+                if event.ui_element == self.controls.button_show_records:
+                    self.controls.show_records(db.get_all_records())
                 if event.ui_element == self.controls.button_start:
                     # Сохраняем последнее указанное имя
                     self.user_name = self.controls.button_user_name.text
@@ -349,3 +354,18 @@ class Game:
         b.rect.x = pos.x
         b.rect.y = pos.y
         self.count_amo += 1
+
+    def _save_stats(self):
+        """
+        Сохраняет статистику игры
+        """
+        db.add_new_record(self.user_name, time.time(), self.count_amo, self.score)
+
+    def _reset_stats(self):
+        """
+        Сборосить статистику
+        """
+        self.count_amo = 0
+        self.score = 0
+        self.monsters_created = 0
+        self.game_level = 1

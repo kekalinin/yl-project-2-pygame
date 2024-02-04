@@ -63,3 +63,19 @@ class Controls:
         for c in self.controls:
             c.show()
 
+    def show_records(self, data):
+        """
+        Показывает окно с достижениями.
+        """
+        output_window = pygame_gui.elements.UIWindow(
+            pygame.Rect(50, 20, settings.RECORDS_WINDOW_WIDTH, settings.RECORDS_WINDOW_HEIGHT),
+            window_display_title="Достижения в игре")
+        text_output_box = pygame_gui.elements.UITextBox(
+            relative_rect=pygame.Rect((0, 0), output_window.get_container().get_size()),
+            html_text="",
+            container=output_window)
+        text = f"  id |    пользователь |                дата |    очки |    пули\n"
+        for row in data:
+            text += f"{row[0]: >4} | {row[1]: >15} | {row[2]: >15} | {row[3]: >7} | {row[4]: >7}\n"
+
+        text_output_box.set_text(text)
