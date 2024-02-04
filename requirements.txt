@@ -1,0 +1,6 @@
+# pip freeze > requirements.txt
+
+pygame==2.5.2
+pygame-ce==2.4.0
+pygame-gui==0.6.9
+python-i18n==0.3.9
