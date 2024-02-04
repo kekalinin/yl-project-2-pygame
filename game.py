@@ -17,7 +17,7 @@ class Game:
 
     # Событие и период в мс для создания нового монстра
     NEW_MONSTER_EVENT = pygame.USEREVENT + 1
-    NEW_MONSTER_TIMEOUT = 1000
+    NEW_MONSTER_TIMEOUT = 600
 
     # Координаты, где будем показывать диалоги
     DIALOG_X, DIALOG_Y = settings.SCREEN_WIDTH // 3, settings.SCREEN_HEIGHT // 3
@@ -186,11 +186,11 @@ class Game:
             self.wait_start_game = True
             self.game_running = False
             pygame_gui.windows.UIConfirmationDialog(
-                rect=pygame.Rect((self.DIALOG_X, self.DIALOG_Y), (400, 250)),
+                rect=pygame.Rect((self.DIALOG_X, self.DIALOG_Y), (500, 250)),
                 manager=self.ui_manager,
-                window_title=f"Вы закончили уровень #{old_level}!",
-                action_long_desc=f"Теперь необходимо уничтожить {cnt} монстров.\n"
-                                 f"Они двигаются со скоростью: {speed}.\n"
+                window_title=f"Первая волна отражена#{old_level}!",
+                action_long_desc=f"Но теперь необходимо уничтожить {cnt} монстров.\n"
+                                 f"!ОСТОРОЖНО! они двигаются со скоростью: {speed}.\n"
                                  "Go-go-go!",
                 blocking=True
             )
@@ -298,9 +298,12 @@ class Game:
 
             # gui
             if event.type == pygame_gui.UI_CONFIRMATION_DIALOG_CONFIRMED:
+                # Если вышли из игры, то сбрасываем все показатели текущей игры
                 if self.wait_confirm_exit:
                     self.game_running = False
                     self.wait_confirm_exit = False
+                    self.monsters.empty()
+                    self._set_level_conditions()
 
                 if self.wait_start_game:
                     self.game_running = True
@@ -326,7 +329,7 @@ class Game:
                     pygame_gui.windows.UIConfirmationDialog(
                         rect=pygame.Rect((self.DIALOG_X, self.DIALOG_Y), (400, 240)),
                         manager=self.ui_manager,
-                        window_title=f"Начинаем играть! Уровень: {self.game_level}",
+                        window_title=f"Начинаем! приближается {self.game_level}-я волна",
                         action_long_desc=f"Необходимо уничтожить {cnt} монстров.\n"
                                          f"Они двигаются со скоростью: {speed}.\n"
                                          "Начинаем?",
