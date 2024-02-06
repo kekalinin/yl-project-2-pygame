@@ -27,7 +27,7 @@
 - https://rgsdev.itch.io/free-cc0-modular-animated-vector-characters-2d
 
 Фон:
-- https://craftpix.net/product/2d-horizontal-battle-backgrounds/?utm_campaign=SocialNetwork&utm_source=Dribbble&utm_medium=2D-Battle-Backgrounds
+- https://craftpix.net/product/2d-horizontal-battle-backgrounds/
 
 Шрифт:
 - https://www.fonts.uprock.ru/fonts/porspican
