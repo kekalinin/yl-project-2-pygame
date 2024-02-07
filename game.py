@@ -196,7 +196,7 @@ class Game:
             pygame_gui.windows.UIConfirmationDialog(
                 rect=pygame.Rect((self.DIALOG_X, self.DIALOG_Y), (500, 250)),
                 manager=self.ui_manager,
-                window_title=f"Первая волна отражена#{old_level}!",
+                window_title=f"Волна #{old_level} отражена!",
                 action_long_desc=f"Но теперь необходимо уничтожить {cnt} монстров.\n"
                                  f"!ОСТОРОЖНО! они двигаются со скоростью: {speed}.\n"
                                  "Go-go-go!",
