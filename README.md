@@ -19,7 +19,13 @@
 
 # Правила игры
 
-
+- герой находится в левой части экрана, с помощью кнопок `W/S/UP/DOWN` выполняется его перемещение
+- при нажатии кнопки “ПРОБЕЛ” выполняется выстрел из оружия героя
+- монстры появляются в правой части экрана
+- в зависимости от уровня сложности, с различной скоростью перемещаются справа налево 
+- при столкновении пули и монстра, монстр погибает
+- при столкновении монстра и героя, герой теряет жизнь
+- у героя кол-во жизней от 3-х до 1 в зависимости от уровня сложности
 
 # Используемые ресурсы
 
@@ -48,11 +54,3 @@
 - устанавливать макс. кол-во патронов на уровень
 - добавить новые виды оружия
 - добавить новые виды монстров
-
-
-# Про пересечения
-
-- https://stackoverflow.com/questions/65361582/how-to-get-the-correct-dimensions-for-a-pygame-rectangle-created-from-an-image/65361896#65361896
-- https://stackoverflow.com/questions/74973872/how-to-pin-an-image-in-the-center-of-sprite-rect/74973887#74973887
-- https://github.com/Rabbid76/PyGameExamplesAndAnswers/blob/master/documentation/pygame/pygame_sprite_and_sprite_mask.md
-- https://devdocs.io/pygame/ref/sprite
